@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rom-Com Vault GC - Join</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Basic Reset */
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Fredoka One', sans-serif;
+        }
+        /* Body Background */
+        
+        body {
+            background-color: #ffe6f2;
+            color: #d63384;
+        }
+        /* Navbar */
+        
+        #nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background-color: #fff0f5;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        #nav h1 {
+            font-size: 28px;
+        }
+        
+        #nav-links a {
+            margin-left: 20px;
+            text-decoration: none;
+            color: #d63384;
+            font-weight: 700;
+            transition: 0.3s;
+        }
+        
+        #nav-links a:hover {
+            color: #ff6fb1;
+            transform: scale(1.1);
+        }
+        /* Main Form Section */
+        
+        #join-main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 80px 20px;
+            min-height: 100vh;
+        }
+        
+        .form-section {
+            background-color: #fff0f5;
+            padding: 40px;
+            border-radius: 25px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .form-section h2 {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+        
+        .form-section p {
+            font-size: 18px;
+            margin-bottom: 25px;
+        }
+        /* Form Styles */
+        
+        #join-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        #join-form label {
+            text-align: left;
+            font-size: 16px;
+            font-weight: 700;
+        }
+        
+        #join-form input {
+            padding: 12px 15px;
+            border-radius: 15px;
+            border: 2px solid #ffb3d9;
+            outline: none;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+        
+        #join-form input:focus {
+            border-color: #ff6fb1;
+            box-shadow: 0 0 10px rgba(255, 111, 177, 0.3);
+        }
+        /* Submit Button */
+        
+        #join-form button {
+            margin-top: 10px;
+            padding: 15px 0;
+            background: linear-gradient(90deg, #ff6fb1, #ff85c1);
+            border: none;
+            border-radius: 25px;
+            color: #fff;
+            font-size: 20px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        
+        #join-form button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 111, 177, 0.4);
+        }
+        /* Note Text */
+        
+        .note {
+            font-size: 14px;
+            margin-top: 15px;
+            color: #b3005c;
+        }
+        
+        .note a {
+            color: #d63384;
+            text-decoration: underline;
+        }
+        
+        .note a:hover {
+            color: #ff6fb1;
+        }
+        /* Toggle Button */
+        
+        #theme-toggle {
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            font-size: 24px;
+            transition: transform 0.3s;
+        }
+        
+        #theme-toggle:hover {
+            transform: scale(1.2);
+        }
+        /* Default Light Theme */
+        
+        body.light-theme {
+            background-color: #ffe6f2;
+            color: #d63384;
+        }
+        
+        body.light-theme #join-main {
+            background-color: #fff0f5;
+        }
+        /* Dark Theme - Classic Black */
+        /* Dark Theme */
+        
+        body.dark-theme {
+            background-color: #0d0d0d;
+            /* almost black */
+            color: #ff6fb1;
+            /* pink text for accents */
+        }
+        /* Navbar in Dark Mode */
+        
+        body.dark-theme #nav {
+            background-color: #1a1a1a;
+            /* dark grey navbar */
+            box-shadow: 0 4px 10px rgba(255, 111, 177, 0.3);
+            /* red-ish glow */
+        }
+        
+        body.dark-theme #nav h1,
+        body.dark-theme #nav a {
+            color: #ff6fb1;
+            -webkit-text-stroke: 0.5px #ff0000;
+            /* subtle red stroke for pop */
+        }
+        /* Form Section in Dark Mode */
+        
+        body.dark-theme .form-section {
+            background-color: #1a1a1a;
+            /* greyish-black box */
+            color: #ff6fb1;
+            box-shadow: 0 10px 25px rgba(255, 0, 0, 0.3);
+            /* soft red glow */
+            -webkit-text-stroke: 0.2px #ff0000;
+            /* subtle stroke on text */
+        }
+        /* Inputs in Dark Mode */
+        
+        body.dark-theme input {
+            background-color: #333;
+            /* dark grey input box */
+            color: #fff;
+            /* white text inside inputs */
+            border: 2px solid #ff6fb1;
+            /* pink border */
+            box-shadow: 0 2px 5px rgba(255, 0, 0, 0.2);
+            /* subtle red glow */
+        }
+        /* Submit Button in Dark Mode */
+        
+        body.dark-theme #join-form button {
+            background: linear-gradient(90deg, #ff6fb1, #ff4b99);
+            color: #fff;
+            box-shadow: 0 5px 15px rgba(255, 0, 0, 0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        body.dark-theme #join-form button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(255, 0, 0, 0.5);
+            /* glow on hover */
+        }
+        /* Dark Mode Hover Effects */
+        
+        body.dark-theme input:hover,
+        body.dark-theme select:hover,
+        body.dark-theme textarea:hover {
+            border-color: #ff4d6d;
+            /* soft red */
+            box-shadow: 0 0 10px rgba(255, 77, 109, 0.4);
+        }
+        
+        body.dark-theme #nav a:hover {
+            color: #ff4d6d;
+            -webkit-text-stroke: 0.5px #ff4d6d;
+            /* subtle red outline */
+            transform: scale(1.05);
+            transition: 0.3s;
+        }
+        
+        body.dark-theme #join-form button:hover {
+            box-shadow: 0 5px 20px rgba(255, 77, 109, 0.5);
+            transform: scale(1.05);
+        }
+        /* Dark Mode Join Form Box */
+        
+        body.dark-theme .form-section {
+            background-color: #1f1f1f;
+            /* dark grey instead of black */
+            color: #fff;
+            box-shadow: 0 10px 25px rgba(255, 77, 109, 0.3);
+            /* subtle red glow */
+            -webkit-text-stroke: 0.3px #ff4d6d;
+            /* soft red outline on text */
+        }
+        /* Input boxes in dark mode */
+        
+        body.dark-theme input {
+            background-color: #2c2c2c;
+            /* slightly lighter grey */
+            color: #fff;
+            border: 2px solid #444;
+            /* neutral border, glows on hover */
+        }
+        
+        body.dark-theme input:hover {
+            border-color: #ff4d6d;
+            box-shadow: 0 0 8px rgba(255, 77, 109, 0.5);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav id="nav">
+        <h1>Rom-Com Vault GC 💕</h1>
+        <div id="nav-links">
+            <a href="index.html">Home</a>
+            <a href="admins.html">Admins</a>
+            <a href="privacy.html">Privacy</a>
+        </div>
+        <button id="theme-toggle">🌙</button>
+
+    </nav>
+
+    <!-- Main Form Section -->
+    <main id="join-main">
+        <section class="form-section">
+            <h2>Hop Into the GC 💖</h2>
+            <p>We can’t wait to meet you! Fill out the details below and our love gurus will review your entry. 🌸✨</p>
+
+            <form id="join-form">
+                <label for="name">Name / Nickname *</label>
+                <input type="text" id="name" name="name" placeholder="Your adorable nickname" required>
+
+                <label for="instagram">Instagram Handle</label>
+                <input type="text" id="instagram" name="instagram" placeholder="@yourIG">
+
+                <label for="anime">Favorite Rom-Com Anime *</label>
+                <input type="text" id="anime" name="anime" placeholder="Your top heart-fluttering anime" required>
+
+                <label for="ship">Favorite Ship</label>
+                <input type="text" id="ship" name="ship" placeholder="Your OTP 💞">
+
+                <button type="submit">Hop In 💕</button>
+            </form>
+
+            <p class="note">Our moderators will review your request. Your info is private and only used for GC approval. Read our <a href="privacy.html">Privacy Policy 💌</a></p>
+        </section>
+        <script>
+            const toggle = document.getElementById('theme-toggle');
+            toggle.addEventListener('click', () => {
+                document.body.classList.toggle('dark-theme');
+                document.body.classList.toggle('light-theme');
+
+                // Switch icon
+                if (document.body.classList.contains('dark-theme')) {
+                    toggle.textContent = '☀️'; // sun for light
+                } else {
+                    toggle.textContent = '🌙'; // moon for dark
+                }
+            });
+
+            // Set default theme
+            document.body.classList.add('light-theme');
+        </script>
+    </main>
+
+</body>
+
+</html>

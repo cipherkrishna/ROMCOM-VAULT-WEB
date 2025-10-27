@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rom-Com Anime List</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet" />
+    <style>
+         :root {
+            --light-bg: #ffe6f2;
+            --light-card: #fff0f5;
+            --dark-bg: #1f1f1f;
+            --dark-card: #2c2c2c;
+            --accent: #d63384;
+            --accent2: #ff6fb1;
+            --text-light: #1f1f1f;
+            --text-dark: #fff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Fredoka One", cursive;
+        }
+        
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-light);
+            transition: all 0.3s ease;
+        }
+        
+        body.dark {
+            background-color: var(--dark-bg);
+            color: var(--text-dark);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            align-items: center;
+        }
+        
+        input[type="text"],
+        select {
+            padding: 0.5rem 1rem;
+            border-radius: 12px;
+            border: 2px solid var(--accent);
+            outline: none;
+        }
+        
+        button.theme-toggle {
+            padding: 0.5rem 1rem;
+            background: linear-gradient(45deg, var(--accent), var(--accent2));
+            border: none;
+            border-radius: 12px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        button.theme-toggle:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .anime-card {
+            background-color: var(--light-card);
+            border-radius: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        body.dark .anime-card {
+            background-color: var(--dark-card);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        }
+        
+        .anime-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .anime-card h3 {
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+        
+        .anime-card p {
+            margin-bottom: 0.3rem;
+            font-size: 0.9rem;
+        }
+        
+        .genres {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.3rem;
+        }
+        
+        .genre-tag {
+            background: linear-gradient(45deg, var(--accent), var(--accent2));
+            padding: 0.2rem 0.6rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            color: #fff;
+        }
+        
+        @media (max-width: 600px) {
+            .controls {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="controls">
+            <input type="text" placeholder="Search anime..." id="searchInput" />
+            <select id="genreFilter">
+          <option value="">All Genres</option>
+          <option value="Romance">Romance</option>
+          <option value="Comedy">Comedy</option>
+          <option value="Slice of Life">Slice of Life</option>
+          <option value="School">School</option>
+          <option value="Supernatural">Supernatural</option>
+          <option value="Sports">Sports</option>
+        </select>
+            <button class="theme-toggle" id="themeToggle">Toggle Theme</button>
+        </div>
+        <div class="card-grid" id="animeGrid"></div>
+    </div>
+
+    <script>
+        const animeList = [{
+            name: "7th time loop",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "Kamisama Kiss",
+            episodes: "TBA",
+            genres: ["Romance", "Supernatural"],
+        }, {
+            name: "Komi Can't Communicate",
+            episodes: "TBA",
+            genres: ["Comedy", "Slice of Life"],
+        }, {
+            name: "The Quintessential Quintuplets",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "Special A",
+            episodes: "TBA",
+            genres: ["Romance", "School"],
+        }, {
+            name: "Roshidere",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "Blue Box",
+            episodes: "TBA",
+            genres: ["Romance", "Sports"],
+        }, {
+            name: "Love, Chunibyo & Other Delusions",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "Days with My Stepsister",
+            episodes: "TBA",
+            genres: ["Romance", "Slice of Life"],
+        }, {
+            name: "Horimiya",
+            episodes: "TBA",
+            genres: ["Romance", "Slice of Life"],
+        }, {
+            name: "The Angel Next Door Spoils Me Rotten",
+            episodes: "TBA",
+            genres: ["Romance", "Slice of Life"],
+        }, {
+            name: "Tonikawa",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "My Dating Story",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "More Than a Married Couple",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "The Girl I Like Forgot Her Glasses",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "Boarding School Juliet",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "Taisho Otome Fairy Tail",
+            episodes: "TBA",
+            genres: ["Romance", "Historical"],
+        }, {
+            name: "Oregairu",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "Pseudo Harem",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "Darling in the Franxx",
+            episodes: "TBA",
+            genres: ["Romance", "Mecha"],
+        }, {
+            name: "Maid Sama",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "Fruit Basket",
+            episodes: "TBA",
+            genres: ["Romance", "Drama"],
+        }, {
+            name: "Wotakoi",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "Ouran High School Host Club",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "Shikimori is Not Just a Cutie",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "Golden Time",
+            episodes: "TBA",
+            genres: ["Romance", "Drama"],
+        }, {
+            name: "Love is War",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "The Danger in My Heart",
+            episodes: "TBA",
+            genres: ["Romance", "Slice of Life"],
+        }, {
+            name: "The Fragrant Flower Blooms with Dignity",
+            episodes: "TBA",
+            genres: ["Romance", "Slice of Life"],
+        }, {
+            name: "My Awkward Senpai",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "Your Name",
+            episodes: "TBA",
+            genres: ["Romance", "Drama"],
+        }, {
+            name: "Orange",
+            episodes: "TBA",
+            genres: ["Romance", "Drama"],
+        }, {
+            name: "Weathering with You",
+            episodes: "TBA",
+            genres: ["Romance", "Drama"],
+        }, {
+            name: "Vermeil in Gold",
+            episodes: "TBA",
+            genres: ["Romance", "Fantasy"],
+        }, {
+            name: "Garden of Words",
+            episodes: "TBA",
+            genres: ["Romance", "Drama"],
+        }, {
+            name: "Summer Ghost",
+            episodes: "TBA",
+            genres: ["Romance", "Drama"],
+        }, {
+            name: "Miss Vampire Can't Suck Properly",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "To Me the One Who Loved You",
+            episodes: "TBA",
+            genres: ["Romance", "Drama"],
+        }, {
+            name: "To Every You I've Loved Before",
+            episodes: "TBA",
+            genres: ["Romance", "Drama"],
+        }, {
+            name: "Studio Apartment",
+            episodes: "TBA",
+            genres: ["Romance", "Slice of Life"],
+        }, {
+            name: "I Am in Love with Villainess",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "In Expressive Kashiwada and Expressive Oota",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "A Silent Voice",
+            episodes: "TBA",
+            genres: ["Romance", "Drama"],
+        }, {
+            name: "Bunny Girl Senpai",
+            episodes: "TBA",
+            genres: ["Romance", "Slice of Life"],
+        }, {
+            name: "Just Because",
+            episodes: "TBA",
+            genres: ["Romance", "Slice of Life"],
+        }, {
+            name: "Insomniacs After School",
+            episodes: "TBA",
+            genres: ["Romance", "Slice of Life"],
+        }, {
+            name: "My Dress-Up Darling",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "Couple of Cuckoos",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "Masamune Kun no Revenge",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "Highschool DxD",
+            episodes: "TBA",
+            genres: ["Romance", "Action"],
+        }, {
+            name: "Dreaming Boy is a Realist",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "This Art Club Has a Problem",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "Call of the Night",
+            episodes: "TBA",
+            genres: ["Romance", "Supernatural"],
+        }, {
+            name: "My First GF is a Gal",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "Seirei Gensouki",
+            episodes: "TBA",
+            genres: ["Romance", "Fantasy"],
+        }, {
+            name: "Tying the Knot with Amagami Sisters",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "Dealing with Mikadono Sisters is Just a Breeze",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "The Galaxy Next Door",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "The Girl Downstairs",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "2.5D Seduction",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "Prison School",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "Violet Evergarden",
+            episodes: "TBA",
+            genres: ["Romance", "Drama"],
+        }, {
+            name: "Suzume no Tojimari",
+            episodes: "TBA",
+            genres: ["Romance", "Drama"],
+        }, {
+            name: "Myriad Colors Phantom World",
+            episodes: "TBA",
+            genres: ["Romance", "Fantasy"],
+        }, {
+            name: "Yamada Kun and the 7 Witches",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "The Apothecary Diaries",
+            episodes: "TBA",
+            genres: ["Romance", "Historical"],
+        }, {
+            name: "Rent a Girlfriend",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "Oresuki",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "Danmachi",
+            episodes: "TBA",
+            genres: ["Romance", "Fantasy"],
+        }, {
+            name: "And You Thought There Was Never a Girl Online",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "Love is Like a Cocktail",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "Tada Never Falls in Love",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "Bottom Tier Tomiozaki Kun",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "My GF is a Shobitch",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "Infinite Stratos",
+            episodes: "TBA",
+            genres: ["Romance", "Action"],
+        }, {
+            name: "Into the Forest of Fireflies",
+            episodes: "TBA",
+            genres: ["Romance", "Drama"],
+        }, {
+            name: "Date A Live",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "My Cultivator GF",
+            episodes: "TBA",
+            genres: ["Romance", "Fantasy"],
+        }, {
+            name: "Gamers",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "Love Flops",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "Tsurezure Children",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "The Ancient Magus Bride",
+            episodes: "TBA",
+            genres: ["Romance", "Fantasy"],
+        }, {
+            name: "Tamako Love Story",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "To Love Ru",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "Hyouka",
+            episodes: "TBA",
+            genres: ["Romance", "Mystery"],
+        }, {
+            name: "Charlotte",
+            episodes: "TBA",
+            genres: ["Romance", "Supernatural"],
+        }, {
+            name: "SAO",
+            episodes: "TBA",
+            genres: ["Romance", "Action"],
+        }, {
+            name: "100 GF That Reallyx5 Love You",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "My Stepsister is My Ex GF",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "My Little Monster",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "The Tunnel to Summer the Exit of Goodbyes",
+            episodes: "TBA",
+            genres: ["Romance", "Drama"],
+        }, {
+            name: "My Sweet Tyrant",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "Clannad",
+            episodes: "TBA",
+            genres: ["Romance", "Drama"],
+        }, {
+            name: "Nisekoi",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "Higehiro",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "My Senpai is Annoying",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "Toradora",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "Kimi no Todoke",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "Our Last Crusade",
+            episodes: "TBA",
+            genres: ["Romance", "Action"],
+        }, {
+            name: "Trapped in a Dating Sim",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "We Never Learn",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "Yu-No",
+            episodes: "TBA",
+            genres: ["Romance", "Fantasy"],
+        }, {
+            name: "Love, Election & Chocolate",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "Yuru-Yuri",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "An Archdemon's Dilemma",
+            episodes: "TBA",
+            genres: ["Romance", "Fantasy"],
+        }, {
+            name: "A Sign of Affection",
+            episodes: "TBA",
+            genres: ["Romance", "Slice of Life"],
+        }, {
+            name: "Dangers in My Heart",
+            episodes: "TBA",
+            genres: ["Romance", "Slice of Life"],
+        }, {
+            name: "Maoyu",
+            episodes: "TBA",
+            genres: ["Romance", "Fantasy"],
+        }, {
+            name: "Barakamon",
+            episodes: "TBA",
+            genres: ["Slice of Life", "Comedy"],
+        }, {
+            name: "Love of Kill",
+            episodes: "TBA",
+            genres: ["Romance", "Action"],
+        }, {
+            name: "Cupid's Chocolate",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "Majikoi!! Oh Samurai Girls",
+            episodes: "TBA",
+            genres: ["Romance", "Action"],
+        }, {
+            name: "Tomo-chan is a Girl",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "Our Dating Story",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "You Are Miss Servant",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "Erased",
+            episodes: "TBA",
+            genres: ["Romance", "Mystery"],
+        }, {
+            name: "Loner Life in Another World",
+            episodes: "TBA",
+            genres: ["Romance", "Fantasy"],
+        }, {
+            name: "I'm Giving the Disgraced Noble Lady a Crash Course in Naughty Ness",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "Rainbow Days",
+            episodes: "TBA",
+            genres: ["Romance", "Slice of Life"],
+        }, {
+            name: "Kokoro Connect",
+            episodes: "TBA",
+            genres: ["Romance", "Slice of Life"],
+        }, {
+            name: "Dusk Maiden of Amnesia",
+            episodes: "TBA",
+            genres: ["Romance", "Supernatural"],
+        }, {
+            name: "Plastic Memories",
+            episodes: "TBA",
+            genres: ["Romance", "Drama"],
+        }, {
+            name: "Kubo-san Won't Let Me Be Invisible",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "The Shiunji Family Children",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "Sankaera Undying Love",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "Candy & Chains",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "Can a Boy Girl Friendship Survive?",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "I Have Always Liked You",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "Kanojo Face",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "3D Kanojo",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "Science Fell in Love",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "Josee, the Tiger and the Fish",
+            episodes: "TBA",
+            genres: ["Romance", "Drama"],
+        }, {
+            name: "The Pet Girl of Sakurasou",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "Lovely Complex",
+            episodes: "TBA",
+            genres: ["Romance", "Comedy"],
+        }, {
+            name: "Rosario+Vampire",
+            episodes: "TBA",
+            genres: ["Romance", "Supernatural"],
+        }, ];
+
+        const animeGrid = document.getElementById("animeGrid");
+
+        function renderAnimeCards(list) {
+            animeGrid.innerHTML = "";
+            list.forEach((anime) => {
+                        const card = document.createElement("div");
+                        card.classList.add("anime-card");
+                        card.innerHTML = `
+                    <h3>${anime.name}</h3>
+                    <p><strong>Episodes:</strong> ${anime.episodes || "TBA"}</p>
+                    <div class="genres">
+                        ${anime.genres
+                          .map((g) => `<span class="genre-tag">${g}</span>`)
+                          .join("")}
+                    </div>
+                `;
+          animeGrid.appendChild(card);
+        });
+      }
+
+      renderAnimeCards(animeList);
+
+      const searchInput = document.getElementById("searchInput");
+      // === DYNAMIC GENRE FILTER ===
+      const genreFilter = document.getElementById("genreFilter");
+
+      // Collect all unique genres from animeList
+      const genres = [
+        ...new Set(animeList.flatMap((anime) => anime.genres)),
+      ].sort();
+
+      // Populate the dropdown
+      genres.forEach((g) => {
+        const option = document.createElement("option");
+        option.value = g;
+        option.textContent = g;
+        genreFilter.appendChild(option);
+      });
+
+      // === FILTER FUNCTION (unchanged) ===
+      function filterAnime() {
+        const query = searchInput.value.toLowerCase();
+        const genre = genreFilter.value.toLowerCase();
+        const filtered = animeList.filter((anime) => {
+          const matchesName = anime.name.toLowerCase().includes(query);
+          const matchesGenre =
+            !genre || anime.genres.some((g) => g.toLowerCase() === genre);
+          return matchesName && matchesGenre;
+        });
+        renderAnimeCards(filtered);
+      }
+
+      searchInput.addEventListener("input", filterAnime);
+      genreFilter.addEventListener("change", filterAnime);
+
+      searchInput.addEventListener("input", filterAnime);
+      genreFilter.addEventListener("change", filterAnime);
+
+      document.getElementById("themeToggle").addEventListener("click", () => {
+        document.body.classList.toggle("dark");
+      });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admins • Rom-Com Vault GC</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
+    <style>
+        /* Base Styles */
+        
+        body {
+            margin: 0;
+            font-family: 'Fredoka One', sans-serif;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 20px;
+            font-size: 28px;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        nav a {
+            text-decoration: none;
+            font-weight: 700;
+            transition: 0.3s;
+        }
+        
+        nav a:hover {
+            transform: scale(1.1);
+        }
+        
+        .admin-section {
+            padding: 50px 20px;
+            text-align: center;
+        }
+        
+        .admin-section h2 {
+            font-size: 36px;
+            margin-bottom: 40px;
+        }
+        
+        .admin-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+        }
+        
+        .admin-card {
+            border-radius: 25px;
+            padding: 25px;
+            width: 250px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .admin-card img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+        }
+        
+        .admin-card h3 {
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+        
+        .admin-card p {
+            font-size: 14px;
+            margin: 5px 0;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 25px;
+            font-size: 14px;
+            margin-top: 50px;
+        }
+        
+        @media (max-width: 600px) {
+            .admin-card {
+                width: 90%;
+            }
+        }
+        /* Light Theme */
+        
+        body.light-theme {
+            background-color: #ffe6f2;
+            color: #d63384;
+        }
+        
+        body.light-theme header,
+        body.light-theme nav,
+        body.light-theme footer {
+            background-color: #fff0f5;
+            color: #d63384;
+        }
+        
+        body.light-theme nav a {
+            color: #d63384;
+        }
+        
+        body.light-theme nav a:hover {
+            color: #ff6fb1;
+        }
+        
+        body.light-theme .admin-card {
+            background-color: #fff0f5;
+            color: #d63384;
+            box-shadow: 0 10px 20px rgba(214, 51, 132, 0.2);
+        }
+        
+        body.light-theme .admin-card:hover {
+            box-shadow: 0 15px 30px rgba(214, 51, 132, 0.3);
+        }
+        
+        body.light-theme .admin-card img {
+            border: 2px solid #ffb3d9;
+        }
+        /* Dark Theme */
+        
+        body.dark-theme {
+            background-color: #1f1f1f;
+            color: #ff85c1;
+        }
+        
+        body.dark-theme header,
+        body.dark-theme nav,
+        body.dark-theme footer {
+            background-color: #2c2c2c;
+            color: #ff85c1;
+        }
+        
+        body.dark-theme nav a {
+            color: #ff85c1;
+        }
+        
+        body.dark-theme nav a:hover {
+            color: #ff4b99;
+        }
+        
+        body.dark-theme .admin-card {
+            background-color: #2c2c2c;
+            color: #ff85c1;
+            box-shadow: 0 10px 20px rgba(255, 75, 153, 0.2);
+        }
+        
+        body.dark-theme .admin-card:hover {
+            box-shadow: 0 15px 30px rgba(255, 75, 153, 0.3);
+        }
+        
+        body.dark-theme .admin-card img {
+            border: 2px solid #ff6fb1;
+        }
+        /* Theme Toggle Button */
+        
+        #theme-toggle {
+            position: absolute;
+            right: 20px;
+            top: 15px;
+            cursor: pointer;
+            font-size: 24px;
+            border: none;
+            background: transparent;
+            transition: transform 0.3s;
+        }
+        
+        #theme-toggle:hover {
+            transform: scale(1.2);
+        }
+    </style>
+</head>
+
+<body class="light-theme">
+    <header>Rom-Com Vault GC 💕</header>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="join.html">Join</a>
+        <a href="admins.html">Admins</a>
+        <a href="privacy.html">Privacy</a>
+        <button id="theme-toggle">🌙</button>
+    </nav>
+
+    <section class="admin-section">
+        <h2>The Heartcore Council</h2>
+        <div class="admin-container">
+            <div class="admin-card">
+                <img src="IMAGES/VAULT.png" alt="Admin 1">
+                <h3>CAPTAIN OF SHIPS</h3>
+                <p>Favorite Anime: Toradora!</p>
+                <p>Favorite Ship: Taiga × Ryuuji</p>
+            </div>
+
+            <div class="admin-card">
+                <img src="IMAGES/pfp.png" alt="Admin 2">
+                <h3>VOID ARCHITECT</h3>
+                <p>Favorite Anime: Rascal Does Not Dream of Bunny Girl Senpai</p>
+                <p>Favorite Ship: Sakuta × Mai</p>
+            </div>
+
+            <div class="admin-card">
+                <img src="IMAGES/Anos.jpg" alt="Admin 3">
+                <h3>ANOS CHAN</h3>
+                <p>Favorite Anime: My Dress-Up Darling</p>
+                <p>Favorite Ship: Wakana × Marin</p>
+            </div>
+
+            <div class="admin-card">
+                <img src="IMAGES/kaizen.png" alt="Admin 4">
+                <h3>KAIZEN {DOC}</h3>
+                <p>Favorite Anime: 7th TIME LOOP</p>
+                <p>Favorite Ship: Hori × Miyamura</p>
+            </div>
+
+            <div class="admin-card">
+                <img src="IMAGES/gramps.png" alt="Admin 5">
+                <h3>OG GRAMPS</h3>
+                <p>Favorite Anime: Blue Period</p>
+                <p>Favorite Ship: Yatora × Ryuji</p>
+            </div>
+
+            <div class="admin-card">
+                <img src="IMAGES/leaper.png" alt="Admin 6">
+                <h3>RAGE LEAPER CHAN</h3>
+                <p>Favorite Anime: Kaguya-sama: Love Is War</p>
+                <p>Favorite Ship: Kaguya × Miyuki</p>
+            </div>
+            <div class="admin-card">
+                <img src="IMAGES/sonpopari.jpg" alt="Admin 7">
+                <h3>SONPOPARI-CHAN</h3>
+                <p>Favorite Anime: Oregairu</p>
+                <p>Favorite Ship: Yukino × Hachiman</p>
+            </div>
+            <div class="admin-card">
+                <img src="IMAGES/femboi.jpg" alt="Admin 8">
+                <h3>FEMBOY</h3>
+                <p>Favorite Anime: Horimiya</p>
+                <p>Favorite Ship: Hori × Miyamura</p>
+            </div>
+
+        </div>
+    </section>
+
+    <footer>© 2025 Rom-Com Vault GC | All Heart Rights Reserved 💞</footer>
+
+    <script>
+        const toggle = document.getElementById('theme-toggle');
+
+        toggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-theme');
+            document.body.classList.toggle('light-theme');
+
+            // Switch icon
+            toggle.textContent = document.body.classList.contains('dark-theme') ? '☀️' : '🌙';
+        });
+    </script>
+</body>
+
+</html>
