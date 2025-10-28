@@ -93,7 +93,7 @@
         .header h1 {
             font-size: 4rem;
             background: linear-gradient(45deg, var(--accent-primary), var(--accent-secondary));
-            -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
             text-shadow: var(--glow);
             margin-bottom: 10px;
@@ -272,7 +272,6 @@
             line-height: 1.6;
             color: var(--text-secondary);
         }
-        /* Footer */
         
         footer {
             padding: 20px;
@@ -285,7 +284,6 @@
             color: var(--text-secondary);
             font-size: 0.9rem;
         }
-        /* Animations */
         
         @keyframes slideInFromTop {
             0% {
@@ -317,7 +315,6 @@
                 opacity: 1;
             }
         }
-        /* Responsive */
         
         @media (max-width: 768px) {
             .header h1 {
@@ -331,10 +328,85 @@
                 margin: 10px;
             }
         }
+        
+        nav {
+            position: relative;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            height: 60px;
+            background-color: transparent;
+            padding: 0 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .menu-icon {
+            font-size: 22px;
+            color: #d63384;
+            cursor: pointer;
+        }
+        
+        ul {
+            position: absolute;
+            top: 60px;
+            right: 20px;
+            list-style: none;
+            background: transparent;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 10px 0;
+            margin: 0;
+            width: 180px;
+            display: none;
+        }
+        
+        ul li {
+            text-align: center;
+            padding: 10px 0;
+        }
+        
+        ul li a {
+            text-decoration: none;
+            color: #d63384;
+            font-weight: 600;
+        }
+        
+        ul li:hover {
+            background: #ffe6f2;
+        }
+        /* Smooth animation */
+        
+        .show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
     </style>
 </head>
 
 <body>
+    <nav>
+        <i class="fa-solid fa-ellipsis-vertical menu-icon"></i>
+
+        <ul id="menu">
+            <li><a href="admins.html">ADMINS PAGE</a></li>
+            <li><a href="index.html">HOME PAGE</a></li>
+            <li><a href="GC.html">GROUP CHAT</a></li>
+            <li><a href="join.html">JOINING FORM</a></li>
+            <li><a href="RECOMMENDATIONS.html">RECOMMENDATION</a></li>
+            <li><a href="privacy.html">PRIVACY</a></li>
+        </ul>
+    </nav>
     <div class="particles" id="particles"></div>
 
     <div class="container">
@@ -412,7 +484,22 @@
                 }
             });
         });
+        const menuIcon = document.querySelector('.menu-icon');
+        const menu = document.getElementById('menu');
+
+        menuIcon.addEventListener('click', () => {
+            menu.classList.toggle('show');
+        });
+
+        // optional: hide menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!menu.contains(e.target) && !menuIcon.contains(e.target)) {
+                menu.classList.remove('show');
+            }
+        });
     </script>
 </body>
 
 </html>
+
+<!-- add a navbar {3 dots at top right that slides and show nav to all pages} -->
